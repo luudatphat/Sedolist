@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.min.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+         var socket = io("http://localhost:3000");
+
+        
+         var arrrayMess = [];
+
+
+         $(document).ready(function(){
+            $("#mrA").click(function(){
+                var name        =  $("#name").val();
+                var message     =  $("#message").val();   
+
+                var data =  name + ':' + message;
+                console.log(data)
+                socket.emit("web-send-data", data);
+            })
+         
+        socket.on("data-web", function(data){
+            console.log(data)
+            $("#boxContent").append("<div class='useronline'>"+ data +"</div>");
+        })
+
+         })
+    </script>
+</head>
+<body>  
+    name<input type="text" value="" id="name">
+    message <input type="text" value="" id="message">
+    <input type="button" value="dangky" id="mrA">
+
+    <div id="boxContent">
+
+    </div>
+</body>
+</html>
